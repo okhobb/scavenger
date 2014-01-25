@@ -5,9 +5,9 @@ Template.currentPositionDiv.currentPosition = function() {
 };
 
 // Return the current closest point session variable.
-Template.currentPositionDiv.currentClosetPoint = function() {
-    return Session.get('currentClosetPoint');
-};
+//Template.currentPositionDiv.currentClosetPoint = function() {
+//  return Session.get('currentClosetPoint');
+//};
 
 Template.currentPositionDiv.currentClosetPointMeters = function() {
     return Session.get('currentClosetPointMeters');
