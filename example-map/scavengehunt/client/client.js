@@ -42,6 +42,7 @@ winningPoints = [
     }
 ];
 
+
 var distanceInMeters = function(pos1, pos2) {
     var pos1LatLng = new google.maps.LatLng(pos1.lat, pos1.lng);
     var pos2LatLng = new google.maps.LatLng(pos2.lat, pos2.lng);
@@ -53,6 +54,16 @@ var updateDistanceInMetersToWinningPoint = function(winningPtId) {
     var meters = distanceInMeters(winningPoints[winningPtId].position, currentPosition);
     Session.set('currentClosetPointMeters', meters);
 };
+
+// used for the hint button, will display current hint and update as you move along through check in points in hunt 
+Session.set('currentHint', winningPoints[0]);
+
+// if (success) {
+//CurrentHint = Session.get(‘CurrentHiint’)
+//  CurrentHint ++;
+//Session.set(‘CurrentHint’, CurrentHint)       
+//  }
+
 
 var distance = function(pos1, pos2) {
    
@@ -75,7 +86,7 @@ var updateDistance = function(clueNum){
 }
 
 checkHint = function(){
- 	updateCheckpoint(clueNumber);
+ 	updateDistance(clueNumber);
     if (Session.get('currentDistance')<Session.get('lastDistance')){
     	alert("You're getting warmer!");
     }
@@ -83,6 +94,8 @@ checkHint = function(){
     	alert("You're getting colder!")
     }
 }
+
+
 
 // Check to see if you won.
 checkWin = function() {
