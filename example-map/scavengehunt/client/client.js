@@ -58,9 +58,14 @@ var updateDistance = function(clueNum){
     Session.set('currentDistance', d);
 }
 
- checkHint = function(){
+checkHint = function(){
  	updateCheckpoint(clueNumber);
-    return (Session.get('currentDistance')<Session.get('lastDistance'));
+    if (Session.get('currentDistance')<Session.get('lastDistance')){
+    	alert("You're getting warmer!");
+    }
+    else {
+    	alert("You're getting colder!")
+    }
 }
 
 // Check to see if you won.
@@ -76,7 +81,7 @@ checkWin = function() {
     		alert("Congratulations you've reached your final destination!");
     }
     else
-    	alert("No, you're not.");
+    	alert("You're not there yet.");
 
 
 };

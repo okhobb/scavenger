@@ -5,13 +5,15 @@ var initUi = function()
 	'click', '.Hint', {},
 	function(e) {
 	    //console.log('adding');                                                                                                                                                                       
-	    alert("my hint")
+	    checkHint();
+	    //
 	})
     .on(
 	'click', '.Target', {},
 	function(e) {
-	    alert("testing if I'm here")
+	    checkWin();
 	});
 }
 
     Meteor.startup(initUi);
+
