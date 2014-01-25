@@ -8,14 +8,28 @@
 <body>
   <div class="row">
     <div class="span4">
-      {{> addGrampsForm}}
-      {{> people}}
+      {{> currentPositionDiv}}
     </div>
     <div class="span8">
       {{> map}}
     </div>
   </div>
 </body>
+
+<template name="currentPositionDiv">
+  <div>
+    lat: {{currentPosition.lat}} lng: {{currentPosition.lng}} closest: {{currentClosetPoint.name}}
+  </div>
+</template>
+
+
+<template name="map">
+  <div id="mapDiv"></div>
+</template>
+
+
+
+<!-- Old stuff from dmitri's old app.... -->
 
 <template name="addGrampsForm">
   
@@ -49,8 +63,4 @@
     <td><button class="btn theyreOkButton" data-id="{{_id}}">They're Ok</button></td>
   </tr>
 
-</template>
-
-<template name="map">
-  <div id="mapDiv"></div>
 </template>
