@@ -19,6 +19,7 @@ var winningPoints = [
 	position: {
 	    lat: 41.8295175,
 	    lng: -71.4022052
+	    clue: "This is where hackathon is at"
 	}
     },
 
@@ -27,6 +28,7 @@ var winningPoints = [
 	position: {
 	    lat: 40.7189750,
             lng: -73.9561360
+	    clue: "We have no idea clues for dmitris house, sorry"
 	}   
     }
 ];
