@@ -10,6 +10,7 @@ Template.currentPositionDiv.currentClosetPoint = function() {
 };
 
 var winningDistanceThreshold = .0001;
+var clueNumber = 0;
 
 // The array of scavenger hunt points.
 var winningPoints = [
@@ -32,21 +33,21 @@ var winningPoints = [
 ];
 
 var distance = function(pos1, pos2) {
-    Session.set('currentDistance',Math.sqrt(
+    Session.set('currentDistance', Math.sqrt(
 	((pos1.lat - pos2.lat) * (pos1.lat - pos2.lat))
 	    + ((pos1.lng - pos2.lng) * (pos1.lng - pos2.lng))
-    ); 
-    return Math.sqrt(
-	((pos1.lat - pos2.lat) * (pos1.lat - pos2.lat))
-	    + ((pos1.lng - pos2.lng) * (pos1.lng - pos2.lng))
-    );
+    ));
 };
 
+var getDistance = function(){
+	return Session.get('currentDistance');
+}
+
 //this is what i added. not sure if it works yet
-var updateDistance = function(destination){
+var updateDistance = function(clueNum){
 	var curr = Session.get('currentPosition');
 	Session.set('lastDistance', Session.get('currentDistance'));
-	var d = distance(winningPoints[d].position, curr);
+	var d = distance(winningPoints[clueNum].position, curr);
 }
 
 var isCloser = function(){
@@ -75,23 +76,22 @@ var isCloser = function(){
 };
 */
 
-var checkWin = function(destination) {
-    
+var checkWin = function(clueNum) {
+    console.log("checking");
     var curr = Session.get('currentPosition');
     var closestPointDist = undefined;
     var closestPoint = undefined;
 
 
-	var d = distance(winningPoints[destination].position, curr);
+	var d = distance(winningPoints[clueNum].position, curr);
+	updateDistance(clueNum);
 
-	if (closestPoint == undefined || closestPointDist > d) {
-	    closestPoint = winningPoints[i];
+	Session.set('distance', d);
+
+	var correct = (Session.get('distance')<=winningDistanceThreshold);
+	if(correct && clue<winningPoints.length-1){
+		clueNumber++;
 	}
-
-    
-    
-    Session.set('currentClosetPoint', closestPoint);
-
 };
 
 // Loop to update the current position.
@@ -107,7 +107,7 @@ Meteor.setInterval(function() {
 	var crd = pos.coords;
 	Session.set('currentPosition', { lat: crd.latitude, lng: crd.longitude });
 
-	checkWin();
+	checkWin(clueNumber);
     };
     
     var error = function(err) {
