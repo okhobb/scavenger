@@ -17,7 +17,7 @@ Template.currentPositionDiv.currentClue = function(){
 	return Session.get('currentClue');
 }
 
-winningDistanceThreshold = .1;
+winningDistanceThreshold = .00005;
 clueNumber = 0;
 
 // The array of scavenger hunt points.
@@ -33,11 +33,29 @@ winningPoints = [
     },
 
     {
+	name: 'smitty b',
+	position: {
+	    lat: 41.829614,
+            lng: -71.402786,
+	    clue: "Also known as Smitty B"
+	}   
+    },
+
+    {
+	name: 'v dub',
+	position: {
+	    lat: 41.829318,
+            lng: -71.401771,
+	    clue: "One of Brown's dining halls"
+	}   
+    },
+
+    {
 	name: 'dmitris house',
 	position: {
 	    lat: 40.7189750,
             lng: -73.9561360,
-	    clue: "We have no idea clues for dmitris house, sorry"
+	    clue: "Dmitri's house, good luck getting there"
 	}   
     }
 ];
