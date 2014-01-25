@@ -13,19 +13,22 @@ Template.currentPositionDiv.currentClosetPointMeters = function() {
     return Session.get('currentClosetPointMeters');
 };
 
-var aboutOneFoot = 0.00000333333;
-var winningDistanceThreshold = 10. * aboutOneFoot;
-var clueNumber = 0;
+Template.currentPositionDiv.currentClue = function(){
+	return Session.get('currentClue');
+}
+
+winningDistanceThreshold = .0001;
+clueNumber = 0;
 
 // The array of scavenger hunt points.
-var winningPoints = [
+winningPoints = [
     
     {
 	name: 'brown alum hall',
 	position: {
 	    lat: 41.8295175,
 	    lng: -71.4022052,
-	    clue: "This is where hackathon is at"
+	    clue: "This is where hackathon is"
 	}
     },
 
@@ -52,10 +55,7 @@ var updateDistanceInMetersToWinningPoint = function(winningPtId) {
 };
 
 var distance = function(pos1, pos2) {
-    Session.set('currentDistance', Math.sqrt(
-	((pos1.lat - pos2.lat) * (pos1.lat - pos2.lat))
-	    + ((pos1.lng - pos2.lng) * (pos1.lng - pos2.lng))
-    )); 
+   
     return Math.sqrt(
 	((pos1.lat - pos2.lat) * (pos1.lat - pos2.lat))
 	    + ((pos1.lng - pos2.lng) * (pos1.lng - pos2.lng))
@@ -71,33 +71,33 @@ var updateDistance = function(clueNum){
     var curr = Session.get('currentPosition');
     Session.set('lastDistance', Session.get('currentDistance'));
     var d = distance(winningPoints[clueNum].position, curr);
+    Session.set('currentDistance', d);
 }
 
-var isCloser = function(){
-    return Session.get('currentDistance')<Session.get('lastDistance');
+ checkHint = function(){
+ 	updateCheckpoint(clueNumber);
+    return (Session.get('currentDistance')<Session.get('lastDistance'));
 }
 
 // Check to see if you won.
-/*var checkWin = function() {
-    
-    var curr = Session.get('currentPosition');
-    var closestPointDist = undefined;
-    var closestPoint = undefined;
-
-    for (var i = 0; i < winningPoints.length; i++) {
-	
-	var d = distance(winningPoints[i].position, curr);
-
-	if (closestPoint == undefined || closestPointDist > d) {
-	    closestPoint = winningPoints[i];
-	}
-
+checkWin = function() {
+    updateDistance(clueNumber);
+    var curr = Session.get('currentDistance');
+    if(curr<=winningDistanceThreshold){
+    	
+    	if(clueNumber<winningPoints.length-1){
+    		clueNumber++;
+    	}
+    	else
+    		alert("Congratulations you've reached your final destination!");
     }
-    
-    Session.set('currentClosetPoint', closestPoint);
+    else
+    	alert("No, you're not.");
+
 
 };
-*/
+
+
 
 
 var centerMapOnCurrentPosition = function() { 
@@ -108,6 +108,10 @@ var centerMapOnCurrentPosition = function() {
 	_map.setCenter(pnt);
     }
 };
+
+var setCurrentClue = function(){
+	Session.set('currentClue', winningPoints[clueNumber].position.clue);
+}
 
 var _currentPositionMarker = undefined;
 
@@ -166,4 +170,4 @@ Meteor.setInterval(function() {
     navigator.geolocation.getCurrentPosition(success, error, options);
 
 }, 5000);
-    
+
