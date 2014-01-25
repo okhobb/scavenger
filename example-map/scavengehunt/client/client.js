@@ -32,14 +32,29 @@ var winningPoints = [
 ];
 
 var distance = function(pos1, pos2) {
+    Session.set('currentDistance',Math.sqrt(
+	((pos1.lat - pos2.lat) * (pos1.lat - pos2.lat))
+	    + ((pos1.lng - pos2.lng) * (pos1.lng - pos2.lng))
+    ); 
     return Math.sqrt(
 	((pos1.lat - pos2.lat) * (pos1.lat - pos2.lat))
 	    + ((pos1.lng - pos2.lng) * (pos1.lng - pos2.lng))
     );
 };
 
+//this is what i added. not sure if it works yet
+var updateDistance = function(destination){
+	var curr = Session.get('currentPosition');
+	Session.set('lastDistance', Session.get('currentDistance'));
+	var d = distance(winningPoints[d].position, curr);
+}
+
+var isCloser = function(){
+	return Session.get('currentDistance')<Session.get('lastDistance');
+}
+
 // Check to see if you won.
-var checkWin = function() {
+/*var checkWin = function() {
     
     var curr = Session.get('currentPosition');
     var closestPointDist = undefined;
@@ -54,6 +69,26 @@ var checkWin = function() {
 	}
 
     }
+    
+    Session.set('currentClosetPoint', closestPoint);
+
+};
+*/
+
+var checkWin = function(destination) {
+    
+    var curr = Session.get('currentPosition');
+    var closestPointDist = undefined;
+    var closestPoint = undefined;
+
+
+	var d = distance(winningPoints[destination].position, curr);
+
+	if (closestPoint == undefined || closestPointDist > d) {
+	    closestPoint = winningPoints[i];
+	}
+
+    
     
     Session.set('currentClosetPoint', closestPoint);
 
