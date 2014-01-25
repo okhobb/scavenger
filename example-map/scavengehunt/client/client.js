@@ -152,7 +152,7 @@ checkWin = function() {
     		Session.set('currentClue', winningPoints[clueNumber].position.clue);
     	}
     	else
-    		alert("Congratulations you've reached your final destination! You're a winner!");
+    		alert("Congratulations, you've reached your final destination! You're a winner! You're the best! Yay!");
     }
     else
     	alert("You're not there yet.");
