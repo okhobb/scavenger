@@ -190,3 +190,5 @@ Meteor.setInterval(function() {
 
 }, 500);
 
+Session.set('currentClue', winningPoints[0].position.clue);
+
