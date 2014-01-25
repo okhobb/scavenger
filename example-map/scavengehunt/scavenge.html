@@ -1,0 +1,56 @@
+<head>
+  <title>grampstagram</title>
+
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true&key=AIzaSyBtcTf2lVamhL2DNN7P4S2i4953RdkxvY8"></script>
+
+</head>
+
+<body>
+  <div class="row">
+    <div class="span4">
+      {{> addGrampsForm}}
+      {{> people}}
+    </div>
+    <div class="span8">
+      {{> map}}
+    </div>
+  </div>
+</body>
+
+<template name="addGrampsForm">
+  
+  <form>
+    <div><label>Who</label><input id="addGrampsFormName" name="who"></div>
+    <div><label>Where</label><input id="addGrampsFormWhere" name="where"></div>
+    <div><a href="javascript:void(0);" class="btn addGrampsFormSubmit">Add</a></div>
+  </form>
+
+</template>
+
+<template name="people">
+
+  <table>
+    <thead><tr><th>Name</th><th>Where</th><th>Last Checkin</th><th>They're ok</th></tr></thead>
+    <tbody>
+      {{#each listPeople}}
+      {{> personRow}}
+      {{/each}}
+    </tbody>
+  </table>
+
+</template>
+
+<template name="personRow">
+
+  <tr>
+    <td>{{name}}</td>
+    <td>{{address}}</td>
+    <td>{{lastCheckinTimeMillis}}</td>
+    <td><button class="btn theyreOkButton" data-id="{{_id}}">They're Ok</button></td>
+  </tr>
+
+</template>
+
+<template name="map">
+  <div id="mapDiv"></div>
+</template>

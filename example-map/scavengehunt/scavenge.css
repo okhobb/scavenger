@@ -1,0 +1,12 @@
+/* CSS declarations go here */
+
+#mapDiv {
+    width: 800px;
+    height: 600px;
+    background-color: transparent;
+}
+
+#mapDiv img {
+    max-width: none;
+    background-color: transparent;
+}
