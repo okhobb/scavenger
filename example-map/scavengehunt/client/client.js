@@ -9,6 +9,10 @@ Template.currentPositionDiv.currentClosetPoint = function() {
     return Session.get('currentClosetPoint');
 };
 
+Template.currentPositionDiv.currentClosetPointMeters = function() {
+    return Session.get('currentClosetPointMeters');
+};
+
 Template.currentPositionDiv.currentClue = function(){
 	return Session.get('currentClue');
 }
@@ -37,6 +41,18 @@ winningPoints = [
 	}   
     }
 ];
+
+var distanceInMeters = function(pos1, pos2) {
+    var pos1LatLng = new google.maps.LatLng(pos1.lat, pos1.lng);
+    var pos2LatLng = new google.maps.LatLng(pos2.lat, pos2.lng);
+    return google.maps.geometry.spherical.computeDistanceBetween(pos1LatLng, pos2LatLng);
+};
+
+var updateDistanceInMetersToWinningPoint = function(winningPtId) {
+    var currentPosition = Session.get('currentPosition');
+    var meters = distanceInMeters(winningPoints[winningPtId].position, currentPosition);
+    Session.set('currentClosetPointMeters', meters);
+};
 
 var distance = function(pos1, pos2) {
    
@@ -85,6 +101,7 @@ checkWin = function() {
 
 
 };
+
 
 
 
@@ -146,6 +163,9 @@ Meteor.setInterval(function() {
     var success = function(pos) {
 	var crd = pos.coords;
 	Session.set('currentPosition', { lat: crd.latitude, lng: crd.longitude });
+
+	// TODO - put this in the hint function.
+	updateDistanceInMetersToWinningPoint(0);
     };
     
     var error = function(err) {
