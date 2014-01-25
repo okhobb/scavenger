@@ -10,14 +10,24 @@
 </head>
 
 <body>
+  {{> pageTitle}}<p></p>
   {{> currentPositionDiv}}
-  {{> map}}
+  {{> map}}<p></p>
   {{> guiButtons}}
 </body>
 
+<template name="pageTitle">
+  <div>
+    <font size="16">Scavenger, hunt!</font>
+  </div>
+</template>
+
+
 <template name="currentPositionDiv">
   <div>
-    lat: {{currentPosition.lat}} lng: {{currentPosition.lng}} distance meters: {{currentClosetPointMeters}}
+    Current latitude: {{currentPosition.lat}} <br>
+    Current longitude: {{currentPosition.lng}} <br>
+    Distance to next location: {{currentClosetPointMeters}}
   </div>
 </template>
 

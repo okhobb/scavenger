@@ -17,7 +17,7 @@ Template.currentPositionDiv.currentClue = function(){
 	return Session.get('currentClue');
 }
 
-winningDistanceThreshold = .00005;
+winningDistanceThreshold = .0001;
 clueNumber = 0;
 
 // The array of scavenger hunt points.
@@ -28,7 +28,7 @@ winningPoints = [
 	position: {
 	    lat: 41.8295175,
 	    lng: -71.4022052,
-	    clue: "This is where hackathon is"
+	    clue: "This is where hackathon is."
 	}
     },
 
@@ -37,7 +37,7 @@ winningPoints = [
 	position: {
 	    lat: 41.829614,
             lng: -71.402786,
-	    clue: "Also known as Smitty B"
+	    clue: "Also known as Smitty B."
 	}   
     },
 
@@ -46,18 +46,35 @@ winningPoints = [
 	position: {
 	    lat: 41.829318,
             lng: -71.401771,
-	    clue: "One of Brown's dining halls"
+	    clue: "One of Brown's dining halls. Make waffles!"
 	}   
     },
 
     {
+	name: 'kabob and curry',
+	position: {
+	    lat: 40.7189750,
+            lng: -73.9561360,
+	    clue: "Delicious Thayer Indian food."
+	}   
+    },
+
+    {
+	name: 'sayles hall',
+	position: {
+	    lat: 41.826217,
+            lng: -71.402561,
+	    clue: "Contains an organ that weighs about 25 tons."
+	}   
+    },
+    /*{
 	name: 'dmitris house',
 	position: {
 	    lat: 40.7189750,
             lng: -73.9561360,
 	    clue: "Dmitri's house, good luck getting there"
 	}   
-    }
+    }*/
 ];
 
 var distanceInMeters = function(pos1, pos2) {
@@ -123,11 +140,10 @@ checkWin = function() {
     	if(clueNumber<winningPoints.length-1){
     		alert("Bingo, you're correct!");
     		clueNumber++;
-    		/////////////LOOOK HEREEEEEEE//////////////
     		Session.set('currentClue', winningPoints[clueNumber].position.clue);
     	}
     	else
-    		alert("Congratulations you've reached your final destination!");
+    		alert("Congratulations you've reached your final destination! You're a winner!");
     }
     else
     	alert("You're not there yet.");
