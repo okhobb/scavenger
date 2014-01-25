@@ -1,7 +1,7 @@
 <head>
   <title>Scavengers, Hunt!</title>
 
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true&key=AIzaSyBtcTf2lVamhL2DNN7P4S2i4953RdkxvY8"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true&libraries=geometry&key=AIzaSyBtcTf2lVamhL2DNN7P4S2i4953RdkxvY8"></script>
 
 </head>
 
@@ -13,7 +13,7 @@
 
 <template name="currentPositionDiv">
   <div>
-    lat: {{currentPosition.lat}} lng: {{currentPosition.lng}} closest: {{currentClosetPoint.name}}
+    lat: {{currentPosition.lat}} lng: {{currentPosition.lng}} closest: {{currentClosetPoint.name}} distance meters: {{currentClosetPointMeters}}
   </div>
 </template>
 
