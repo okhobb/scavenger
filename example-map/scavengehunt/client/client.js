@@ -10,6 +10,7 @@ Template.currentPositionDiv.currentClosetPoint = function() {
 };
 
 var winningDistanceThreshold = .0001;
+var clueNumber = 0;
 
 // The array of scavenger hunt points.
 var winningPoints = [
@@ -34,14 +35,29 @@ var winningPoints = [
 ];
 
 var distance = function(pos1, pos2) {
-    return Math.sqrt(
+    Session.set('currentDistance', Math.sqrt(
 	((pos1.lat - pos2.lat) * (pos1.lat - pos2.lat))
 	    + ((pos1.lng - pos2.lng) * (pos1.lng - pos2.lng))
-    );
+    ));
 };
 
+var getDistance = function(){
+	return Session.get('currentDistance');
+}
+
+//this is what i added. not sure if it works yet
+var updateDistance = function(clueNum){
+	var curr = Session.get('currentPosition');
+	Session.set('lastDistance', Session.get('currentDistance'));
+	var d = distance(winningPoints[clueNum].position, curr);
+}
+
+var isCloser = function(){
+	return Session.get('currentDistance')<Session.get('lastDistance');
+}
+
 // Check to see if you won.
-var checkWin = function() {
+/*var checkWin = function() {
     
     var curr = Session.get('currentPosition');
     var closestPointDist = undefined;
@@ -60,6 +76,25 @@ var checkWin = function() {
     Session.set('currentClosetPoint', closestPoint);
 
 };
+*/
+
+var checkWin = function(clueNum) {
+    console.log("checking");
+    var curr = Session.get('currentPosition');
+    var closestPointDist = undefined;
+    var closestPoint = undefined;
+
+
+	var d = distance(winningPoints[clueNum].position, curr);
+	updateDistance(clueNum);
+
+	Session.set('distance', d);
+
+	var correct = (Session.get('distance')<=winningDistanceThreshold);
+	if(correct && clue<winningPoints.length-1){
+		clueNumber++;
+	}
+};
 
 // Loop to update the current position.
 Meteor.setInterval(function() {
@@ -74,7 +109,7 @@ Meteor.setInterval(function() {
 	var crd = pos.coords;
 	Session.set('currentPosition', { lat: crd.latitude, lng: crd.longitude });
 
-	checkWin();
+	checkWin(clueNumber);
     };
     
     var error = function(err) {

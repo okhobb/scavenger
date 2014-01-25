@@ -10,3 +10,12 @@
     max-width: none;
     background-color: transparent;
 }
+
+.button {
+	border-radius 5px;
+	border 2px solid #bcd2ee;
+	background-color: orange;
+	height: 20 px;
+	width: 60 px;
+	text-align: center;
+}
