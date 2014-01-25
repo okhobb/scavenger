@@ -5,13 +5,22 @@ var initUi = function()
 	'click', '.Hint', {},
 	function(e) {
 	    //console.log('adding');                                                                                                                                                                       
-	    alert("my hint")
+	    checkHint();
+	    //
 	})
     .on(
 	'click', '.Target', {},
 	function(e) {
-	    alert("testing if I'm here")
+	    checkWin();
 	});
+    //Session.set('currentClue', "my current clue")
 }
 
     Meteor.startup(initUi);
+
+
+Template.guiButtons.getClue = function() {
+    return Session.get('currentHint').position.clue
+    //return Session.get('currentClue')
+}
+

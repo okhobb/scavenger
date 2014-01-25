@@ -5,9 +5,9 @@ Template.currentPositionDiv.currentPosition = function() {
 };
 
 // Return the current closest point session variable.
-Template.currentPositionDiv.currentClosetPoint = function() {
-    return Session.get('currentClosetPoint');
-};
+//Template.currentPositionDiv.currentClosetPoint = function() {
+//  return Session.get('currentClosetPoint');
+//};
 
 Template.currentPositionDiv.currentClosetPointMeters = function() {
     return Session.get('currentClosetPointMeters');
@@ -42,6 +42,7 @@ winningPoints = [
     }
 ];
 
+
 var distanceInMeters = function(pos1, pos2) {
     var pos1LatLng = new google.maps.LatLng(pos1.lat, pos1.lng);
     var pos2LatLng = new google.maps.LatLng(pos2.lat, pos2.lng);
@@ -53,6 +54,16 @@ var updateDistanceInMetersToWinningPoint = function(winningPtId) {
     var meters = distanceInMeters(winningPoints[winningPtId].position, currentPosition);
     Session.set('currentClosetPointMeters', meters);
 };
+
+// used for the hint button, will display current hint and update as you move along through check in points in hunt 
+Session.set('currentHint', winningPoints[0]);
+
+// if (success) {
+//CurrentHint = Session.get(‘CurrentHiint’)
+//  CurrentHint ++;
+//Session.set(‘CurrentHint’, CurrentHint)       
+//  }
+
 
 var distance = function(pos1, pos2) {
    
@@ -74,10 +85,17 @@ var updateDistance = function(clueNum){
     Session.set('currentDistance', d);
 }
 
- checkHint = function(){
- 	updateCheckpoint(clueNumber);
-    return (Session.get('currentDistance')<Session.get('lastDistance'));
+checkHint = function(){
+ 	updateDistance(clueNumber);
+    if (Session.get('currentDistance')<Session.get('lastDistance')){
+    	alert("You're getting warmer!");
+    }
+    else {
+    	alert("You're getting colder!")
+    }
 }
+
+
 
 // Check to see if you won.
 checkWin = function() {
@@ -92,7 +110,7 @@ checkWin = function() {
     		alert("Congratulations you've reached your final destination!");
     }
     else
-    	alert("No, you're not.");
+    	alert("You're not there yet.");
 
 
 };
