@@ -104,6 +104,12 @@ if (Meteor.isClient) {
         };
         _map = new google.maps.Map(document.getElementById('mapDiv'), mapOptions);
 
+	// Mark the winning point (for debugging).
+	var pnt = new google.maps.LatLng(winningPoints[0].position.lat, winningPoints[0].position.lng);
+	new google.maps.Marker({
+	    'map' : _map,
+	    'position' : pnt
+	});
     };
 
     var addGrampsFormSubmitter = function()

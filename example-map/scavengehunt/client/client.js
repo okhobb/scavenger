@@ -162,7 +162,6 @@ Meteor.startup(function() {
 	setMarkerOnCurrentPosition();
     })
 });
-		    
 
 // Loop to update the current position.
 Meteor.setInterval(function() {
