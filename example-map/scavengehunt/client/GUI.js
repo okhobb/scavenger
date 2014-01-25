@@ -20,7 +20,6 @@ var initUi = function()
 
 
 Template.guiButtons.getClue = function() {
-    return Session.get('currentHint').position.clue
-    //return Session.get('currentClue')
+  //  return Session.get('currentHint').position.clue
+    return Session.get('currentClue');
 }
-

@@ -17,7 +17,7 @@ Template.currentPositionDiv.currentClue = function(){
 	return Session.get('currentClue');
 }
 
-winningDistanceThreshold = .0001;
+winningDistanceThreshold = .1;
 clueNumber = 0;
 
 // The array of scavenger hunt points.
@@ -41,7 +41,6 @@ winningPoints = [
 	}   
     }
 ];
-
 
 var distanceInMeters = function(pos1, pos2) {
     var pos1LatLng = new google.maps.LatLng(pos1.lat, pos1.lng);
@@ -104,7 +103,10 @@ checkWin = function() {
     if(curr<=winningDistanceThreshold){
     	
     	if(clueNumber<winningPoints.length-1){
+    		alert("Bingo, you're correct!");
     		clueNumber++;
+    		/////////////LOOOK HEREEEEEEE//////////////
+    		Session.set('currentClue', winningPoints[clueNumber].position.clue);
     	}
     	else
     		alert("Congratulations you've reached your final destination!");
@@ -186,5 +188,5 @@ Meteor.setInterval(function() {
     
     navigator.geolocation.getCurrentPosition(success, error, options);
 
-}, 5000);
+}, 500);
 
