@@ -37,7 +37,7 @@ winningPoints = [
 	position: {
 	    lat: 41.829614,
             lng: -71.402786,
-	    clue: "Also known as Smitty B."
+	    clue: "Used to be the Pembroke College Gymnasium."
 	}   
     },
 
@@ -65,6 +65,15 @@ winningPoints = [
 	    lat: 41.826217,
             lng: -71.402561,
 	    clue: "Contains an organ that weighs about 25 tons."
+	}   
+    },
+
+        {
+	name: 'van wickle',
+	position: {
+	    lat: 41.826135,
+            lng: -71.404482,
+	    clue: "Walk in once, walk out once. Or else you're doing it wrong."
 	}   
     },
     /*{
