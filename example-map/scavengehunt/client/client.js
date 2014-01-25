@@ -35,7 +35,7 @@ var distance = function(pos1, pos2) {
     Session.set('currentDistance',Math.sqrt(
 	((pos1.lat - pos2.lat) * (pos1.lat - pos2.lat))
 	    + ((pos1.lng - pos2.lng) * (pos1.lng - pos2.lng))
-    ); 
+    )); 
     return Math.sqrt(
 	((pos1.lat - pos2.lat) * (pos1.lat - pos2.lat))
 	    + ((pos1.lng - pos2.lng) * (pos1.lng - pos2.lng))
@@ -75,24 +75,47 @@ var isCloser = function(){
 };
 */
 
-var checkWin = function(destination) {
-    
-    var curr = Session.get('currentPosition');
-    var closestPointDist = undefined;
-    var closestPoint = undefined;
 
-
-	var d = distance(winningPoints[destination].position, curr);
-
-	if (closestPoint == undefined || closestPointDist > d) {
-	    closestPoint = winningPoints[i];
-	}
-
-    
-    
-    Session.set('currentClosetPoint', closestPoint);
-
+var centerMapOnCurrentPosition = function() {
+    var currentPosition = Session.get('currentPosition');
+    if (_map && _map.setCenter && currentPosition) {
+	var pnt = new google.maps.LatLng(currentPosition.lat, currentPosition.lng);
+	_map.setCenter(pnt);
+    }
 };
+
+var _currentPositionMarker = undefined;
+
+var setMarkerOnCurrentPosition = function() { 
+    
+    var currentPosition = Session.get('currentPosition');
+    if (_map && _map.setCenter && currentPosition) {
+    
+	var pnt = new google.maps.LatLng(currentPosition.lat, currentPosition.lng);
+
+	// Create or update the current position marker.
+	if (! _currentPositionMarker) {
+	    _currentPositionMarker = new google.maps.Marker({
+		'map' : _map,
+		'position' : pnt
+	    });
+	} else {
+	    _currentPositionMarker.setPosition(pnt);
+	}
+    }
+};
+
+// Run this when meteor is ready.
+Meteor.startup(function() {
+
+    // Run this whenever the Session variables inside the calculation change.
+    // (in this case 'currentPosition').
+    Deps.autorun(function() {
+	centerMapOnCurrentPosition();
+	setMarkerOnCurrentPosition();
+    })
+});
+		    
 
 // Loop to update the current position.
 Meteor.setInterval(function() {
@@ -106,8 +129,7 @@ Meteor.setInterval(function() {
     var success = function(pos) {
 	var crd = pos.coords;
 	Session.set('currentPosition', { lat: crd.latitude, lng: crd.longitude });
-
-	checkWin();
+	//checkWin();
     };
     
     var error = function(err) {

@@ -1,4 +1,4 @@
-var _map = undefined;
+_map = undefined;
 
 People = new Meteor.Collection('people');
 
@@ -96,7 +96,7 @@ if (Meteor.isClient) {
     {
 	var initLat = 40.7189750;
         var initLng = -73.9561360
-	var initZoom = 13;
+	var initZoom = 18;
         var mapOptions = {
             center: new google.maps.LatLng(initLat, initLng),
             zoom: initZoom,
